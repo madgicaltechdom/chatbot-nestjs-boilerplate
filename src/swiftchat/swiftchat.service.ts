@@ -13,7 +13,6 @@ export class SwiftchatService {
   private baseUrl = `${this.apiUrl}/${this.botId}/messages`;
 
   async sendRequestToswiftChat(requestData: any) {
-    console.log(requestData)
     try {
 
       const response = await axios.post(this.baseUrl, requestData, {

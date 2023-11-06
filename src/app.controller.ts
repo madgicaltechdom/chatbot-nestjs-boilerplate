@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
-import { UserService } from './module/query';
+import { UserService } from './model/query';
 import { localisedStrings } from './i18n/en/message';
 import { MessageService } from './chat/message.service';
-import IntentClassifier from './intent-classifier/intent-classifier.service';
-import ChatbotService from './intent-classifier/Chatbot service';
+import IntentClassifier from './intent/intent-classifier.service';
+import ChatbotService from './intent/Chatbot service';
 
 @Controller()
 export class AppController {
