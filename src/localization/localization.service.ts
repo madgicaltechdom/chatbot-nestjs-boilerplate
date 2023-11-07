@@ -7,7 +7,6 @@ import { localisedStrings as hindi} from 'src/i18n/hn/message';
 export class LocalizationService {
   constructor(private readonly messageService: MessageService) {}
 
-  
  getWelcomeMessage = async (language) => {
     switch (language) {
       case 'English':
