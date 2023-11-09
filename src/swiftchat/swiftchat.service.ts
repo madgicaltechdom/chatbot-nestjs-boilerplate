@@ -1,18 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
 import { MessageService } from 'src/message/message.service';
-
+import { LocalizationService } from 'src/localization/localization.service';
+import { localisedStrings } from 'src/i18n/Gujrati/localised-strings';
 dotenv.config();
 
 @Injectable()
 export class SwiftchatService {
 
-  private botId = process.env.BOT_ID;
-  private apiKey = process.env.API_KEY;
-  private apiUrl = process.env.API_URL;
-  private baseUrl = `${this.apiUrl}/${this.botId}/messages`;
+  public botId = process.env.BOT_ID;
+  public apiKey = process.env.API_KEY;
+  public apiUrl = process.env.API_URL;
+  public ParentId = process.env.Parent_ID;
+  public baseUrl = `${this.apiUrl}/${this.botId}/messages`;
 
-  constructor(private readonly messageService: MessageService) {}
+  constructor(
+    public readonly messageService: MessageService,
+    public readonly localizationService: LocalizationService,
+
+    ) {}
 
   async sendWelcomeMessage(from: string) {
     try {
@@ -32,9 +38,17 @@ export class SwiftchatService {
     }
   }
 
-  async sendButtonMessage(recipientMobile: string) {
+  async sendButtonMessage(recipientMobile: string,) {
     try {
-      const buttonLabel = this.messageService.getSeeMoreButtonLabel();
+      
+      const newsCategoriesWithSubCategories = await
+      this.localizationService.getNewsCategoriesWithSubCategories(this.ParentId);
+      const buttons = newsCategoriesWithSubCategories.map((subcategory) => {
+        return { type: 'solid', body: subcategory, reply: subcategory };
+      });
+      const localisedStrings1 = localisedStrings.selectNewsCategory
+      console.log("newsCategoriesWithSubCategories",newsCategoriesWithSubCategories)
+      console.log(buttons)
       const requestData = {
         to: recipientMobile,
         type: 'button',
@@ -42,16 +56,10 @@ export class SwiftchatService {
           body: {
             type: 'text',
             text: {
-              body: buttonLabel,
+              body: localisedStrings1,
             },
           },
-          buttons: [
-            {
-              "type": "solid",
-              "body": "Mathematics, Class 1",
-              "reply": "Mathematics, Class 1"
-          }
-          ],
+          buttons: buttons,
           allow_custom_response: false,
         },
       };
@@ -62,4 +70,5 @@ export class SwiftchatService {
       // Handle errors
     }
   }
+  
 }

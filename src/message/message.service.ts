@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { localisedStrings } from 'src/i18n/en/localised-strings';
+import { localisedStrings } from '../i18n/Gujrati/localised-strings';
 import axios from 'axios';
-import { CustomException } from 'src/common/exception/custom.exception';
+import { CustomException } from '../common/exception/custom.exception';
 
 @Injectable()
 export class MessageService {
@@ -12,11 +12,11 @@ export class MessageService {
   }
 
   getSeeMoreButtonLabel() {
-    let seeMoreMessage = localisedStrings.seeMoreMessage
+    let seeMoreMessage = localisedStrings.seeMoreNews
     return seeMoreMessage;
   }
 
-  async sendMessage(baseUrl: string, requestData: any, token: string) {
+  async sendMessage(baseUrl: string, requestData: any, token: string):Promise<any> {
     try {
       const response = await axios.post(baseUrl, requestData, {
         headers: {

@@ -19,9 +19,9 @@ export class AppController {
   @Post('/message')
   async handelUserMessage(@Body() body, @Res() res): Promise<void> {
     try {
-      const { from, text, type } = body;
-      let id = this.chatbotService.processMessage(text.body, body.from);
-      log(body.from,text.body);
+      const {text } = body;
+       this.chatbotService.processMessage(text.body, body.from);
+      log(process.env.BOT_ID,text.body);
       res.send({
         status: 200,
         message: 'Success',
