@@ -1,4 +1,4 @@
-export const newsCarouselNextButtons = (category: string) => {
+export const newsCarouselNextButtons = () => {
     return [
       {
         type: 'solid',

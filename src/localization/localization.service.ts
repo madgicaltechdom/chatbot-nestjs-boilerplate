@@ -12,10 +12,12 @@ export class LocalizationService {
 
 
 
-  async getNewsCategories(gujratiParentId: string): Promise<any[]> {
+  async getNewsCategories(gujratiParentId: string,category:string): Promise<string> {
     
-   const data=await this.fetchLocalizedStrings(parseInt(gujratiParentId));
-    return Object.keys(data);
+    const data = await this.fetchLocalizedStrings(parseInt(gujratiParentId));
+    const categoryId = data[category];
+ 
+    return categoryId || gujratiParentId;
   }
 
  

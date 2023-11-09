@@ -9,7 +9,8 @@ class IntentClassifier {
   private trainClassifier() {
     this.classifier.addDocument('Hi', 'greeting');
     this.classifier.addDocument('sendbutton', 'button');
-    
+    this.classifier.addDocument('button_response', 'button_response');
+    this.classifier.addDocument('persistent_menu_response', 'Topnews');
     this.classifier.train();
   }
   public getIntent(message: string): string {

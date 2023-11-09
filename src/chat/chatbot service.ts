@@ -13,17 +13,40 @@ export class ChatbotService {
     this.message = message;
   }
 
-  public processMessage(message: string, from: string): string {
-    const intent = this.intentClassifier.getIntent(message);
-    if (intent === 'greeting') {
-      this.message.sendWelcomeMessage(from);
-      this.message.sendButtonMessage(from);
-    } else if (intent === 'button') {
-      
-      this.message.sendButtonMessage(from);
+  public async processMessage(body): Promise<string> {
+    const { from, type } = body;
+    console.log(body);
+    let intent;
+  
+    switch (type) {
+      case 'text':
+        intent =  this.intentClassifier.getIntent(body.text.body);
+        break;
+      case 'button_response':
+        intent =  this.intentClassifier.getIntent(type);
+        break;
+      case 'persistent_menu_response':
+        intent =  this.intentClassifier.getIntent(type);
+        break;
+      default:
+        console.error('Unknown message type:', type);
+        break;
     }
-    return "ok"
+  
+    if (intent === 'greeting') {
+      await this.message.sendWelcomeMessage(from);
+      await this.message.sendButtonMessage(from);
+    } else if (intent === 'button_response') {
+      await this.message.sendNewsAsArticleCarousel(body);
+      await this.message.sendHandleButton(body);
+    } else if (intent === 'Topnews') {
+      await this.message.sendNewsAsArticleCarousel(body);
+      await this.message.sendButtonMessage(from);
+    }
+  
+    return "ok";
   }
+  
 }
 
 export default ChatbotService;

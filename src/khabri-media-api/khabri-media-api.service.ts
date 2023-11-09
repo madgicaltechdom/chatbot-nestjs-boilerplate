@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 @Injectable()
 export class KhabriMediaApiService {    
-  async fetchPostsByCategory(categoryId: any, page: number, perPage: number) {
+  async fetchPostsByCategory(categoryId: string, page: number, perPage: number) {
     try {
       const response = await axios.get('https://khabrimedia.com/wp-json/wp/v2/posts', {
         params: {

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './model/user.entity';
 import { AppController } from './app.controller';
-import { UserService } from './model/query';
+import { UserService } from './model/mockuser.service';
 import * as dotenv from 'dotenv';
 import { databaseConfig } from './config/database-config.service';
 import { APP_FILTER } from '@nestjs/core';

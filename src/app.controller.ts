@@ -20,7 +20,7 @@ export class AppController {
   async handelUserMessage(@Body() body, @Res() res): Promise<void> {
     try {
       const {text } = body;
-       this.chatbotService.processMessage(text.body, body.from);
+       this.chatbotService.processMessage(body);
       log(process.env.BOT_ID,text.body);
       res.send({
         status: 200,
